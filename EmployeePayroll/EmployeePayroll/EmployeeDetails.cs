@@ -42,6 +42,48 @@ namespace EmployeePayroll
                     throw new EmployeeException(EmployeeException.ExceptionType.Connection_Failed, "connection failed");
                 }
             }
-        } 
+        }
+        public bool InsertEmployeeData(Employee employee)
+        {
+            try
+            {
+                using (sqlconnection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("InsertEmployeeDetails", sqlconnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@ID", employee.ID);
+                    sqlCommand.Parameters.AddWithValue("@Name", employee.Name);
+                    sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@Address", employee.Address);
+                    sqlCommand.Parameters.AddWithValue("@StartDate", employee.StartDate);
+                    sqlCommand.Parameters.AddWithValue("@Department", employee.Department);
+                    sqlCommand.Parameters.AddWithValue("@BasicPay", employee.BasicPay);
+                    sqlCommand.Parameters.AddWithValue("@Deduction", employee.Deduction);
+                    sqlCommand.Parameters.AddWithValue("@TaxablePay", employee.TaxablePay);
+                    sqlCommand.Parameters.AddWithValue("@IncomeTax", employee.IncomeTax);
+                    sqlCommand.Parameters.AddWithValue("@NetPay", employee.NetPay);
+                    var returnParameter = sqlCommand.Parameters.Add("@new_identity", SqlDbType.Int);
+                    returnParameter.Direction = ParameterDirection.ReturnValue;
+                    Console.WriteLine(employee.ID + "," + employee.Name + "," + employee.Gender + "," + employee.PhoneNumber + "," + employee.Address + ","
+                            + employee.StartDate + "," + employee.Department + "," + employee.BasicPay + "," + employee.Deduction + "," + employee.TaxablePay + "," + employee.IncomeTax + "," + employee.NetPay);
+                    sqlconnection.Open();
+
+                    var result = sqlCommand.ExecuteNonQuery();
+                    sqlconnection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                    sqlconnection.Close();
+                }
+                sqlconnection.Close();
+            }
+            catch (EmployeeException)
+            {
+                throw new EmployeeException(EmployeeException.ExceptionType.Details_Not_In_Correct_Format, "Details is not in correct format");
+            }
+        }
     }
 }
