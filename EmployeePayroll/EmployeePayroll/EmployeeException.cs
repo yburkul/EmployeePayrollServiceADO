@@ -11,7 +11,7 @@ namespace EmployeePayroll
         ExceptionType exceptionType;
         public enum ExceptionType
         {
-            Connection_Failed, Details_Not_In_Correct_Format, Salary_Not_Update
+            Connection_Failed, Details_Not_In_Correct_Format, Salary_Not_Update, Contact_ID_Not_Found
         }
         public EmployeeException(ExceptionType exceptionType, string message) : base(message)
         {

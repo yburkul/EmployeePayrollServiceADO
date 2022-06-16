@@ -111,5 +111,29 @@ namespace EmployeePayroll
                 throw new EmployeeException(EmployeeException.ExceptionType.Salary_Not_Update, "Emplyoee Salary Not Updated");
             }
         }
+        public bool RemoveEmployeeData(Employee empPayroll)
+        {
+            try
+            {
+                using (sqlconnection)
+                {
+                    SqlCommand command = new SqlCommand("RemoveEmployeeFromPayroll", sqlconnection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ID", empPayroll.ID);
+                    sqlconnection.Open();
+                    var result = command.ExecuteNonQuery();
+                    sqlconnection.Close();
+                    if (result != 0)
+                    {
+                        Console.WriteLine("Contact is Deleted");
+                    }
+                    return true;
+                }
+            }
+            catch (EmployeeException)
+            {
+                throw new EmployeeException(EmployeeException.ExceptionType.Contact_ID_Not_Found, "Contact is not Deleted");
+            }
+        }
     }
 }

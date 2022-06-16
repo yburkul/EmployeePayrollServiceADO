@@ -15,6 +15,7 @@ namespace EmployeePayroll
                 Console.WriteLine("2: Close Connection");
                 Console.WriteLine("3: Add Employee Data");
                 Console.WriteLine("4: Update the Employee Salary");
+                Console.WriteLine("5: Remove the Employee Data");
                 Console.WriteLine("0: Exit");
                 option = int.Parse(Console.ReadLine());
                 switch (option)
@@ -74,6 +75,13 @@ namespace EmployeePayroll
                         double basic = Convert.ToInt64(Console.ReadLine());
                         employee.BasicPay = basic;
                         employeeDetails.UpdateEmployeeSalary(employee);
+                        break;
+                    case 5:
+                        Employee delete = new Employee();
+                        Console.WriteLine("Enter a ID For Delete The Contact");
+                        int EmpId = int.Parse(Console.ReadLine());
+                        delete.ID = EmpId;
+                        employeeDetails.RemoveEmployeeData(delete);
                         break;
                     case 0:
                         Console.WriteLine("Exit");

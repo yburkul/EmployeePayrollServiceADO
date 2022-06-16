@@ -48,5 +48,16 @@ namespace EmployeePayrollTesting
             bool result = employeeDetails.UpdateEmployeeSalary(employee);
             Assert.AreEqual(expected, result);
         }
+        /// <summary>
+        /// TC 3 - Remove The Employee Data 
+        /// </summary>
+        [Test]
+        public void Given_ID_ToRemoveEmployeeData()
+        {
+            bool expected = true;
+            employee.ID = 26;
+            bool result = employeeDetails.RemoveEmployeeData(employee);
+            Assert.AreEqual(expected,result);   
+        }
     }
 }
