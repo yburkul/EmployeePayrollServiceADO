@@ -85,5 +85,31 @@ namespace EmployeePayroll
                 throw new EmployeeException(EmployeeException.ExceptionType.Details_Not_In_Correct_Format, "Details is not in correct format");
             }
         }
+        public bool UpdateEmployeeSalary(Employee employee)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("UpdateEmployeeDetails", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@ID", employee.ID);
+                    command.Parameters.AddWithValue("@Name", employee.Name);
+                    command.Parameters.AddWithValue("@BasicPay", employee.BasicPay);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (EmployeeException)
+            {
+                throw new EmployeeException(EmployeeException.ExceptionType.Salary_Not_Update, "Emplyoee Salary Not Updated");
+            }
+        }
     }
 }

@@ -35,5 +35,18 @@ namespace EmployeePayrollTesting
             bool result = employeeDetails.InsertEmployeeData(employee);
             Assert.AreEqual(expected, result);
         }
+        /// <summary>
+        /// TC 2 - Update the Salary of Emplyoee
+        /// </summary>
+        [Test]
+        public void UpdateEmployeeSalary_ShouldReturn_True_AfterUpdate()
+        {
+            bool expected = true;
+            employee.ID = 29;
+            employee.Name = "Terisa";
+            employee.BasicPay = 3000000;
+            bool result = employeeDetails.UpdateEmployeeSalary(employee);
+            Assert.AreEqual(expected, result);
+        }
     }
 }
