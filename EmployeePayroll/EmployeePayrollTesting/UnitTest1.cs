@@ -59,5 +59,17 @@ namespace EmployeePayrollTesting
             bool result = employeeDetails.RemoveEmployeeData(employee);
             Assert.AreEqual(expected,result);   
         }
+        /// <summary>
+        /// TC4- Get Employee Data In Date Range
+        /// </summary>
+        [Test]
+        public void Given_DateRange_GetEmployeePayrollData()
+        {
+            bool expected = true;
+            var fromDate = Convert.ToDateTime("2022-01-01");
+            var ToDate = Convert.ToDateTime("2022-04-01");
+            bool result = employeeDetails.GetEmplyeeDataInDateRange(fromDate, ToDate);
+            Assert.AreEqual(expected, result);
+        }
     }
 }

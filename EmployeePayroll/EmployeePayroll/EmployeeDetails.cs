@@ -135,5 +135,48 @@ namespace EmployeePayroll
                 throw new EmployeeException(EmployeeException.ExceptionType.Contact_ID_Not_Found, "Contact is not Deleted");
             }
         }
+        public bool GetEmplyeeDataInDateRange(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                Employee empPayroll = new Employee();
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("GetEmployeeDataInDateRange", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@FromDate", fromDate);
+                    command.Parameters.AddWithValue("@ToDate", toDate);
+                    connection.Open();
+                    SqlDataReader dr = command.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            empPayroll.ID = dr.GetInt32(0);
+                            empPayroll.Name = dr.GetString(1);
+                            empPayroll.Gender = dr.GetString(2);
+                            empPayroll.PhoneNumber = dr.GetInt64(3);
+                            empPayroll.Address = dr.GetString(4);
+                            empPayroll.StartDate = dr.GetDateTime(5);
+                            empPayroll.Department = dr.GetString(6);
+                            empPayroll.BasicPay = dr.GetInt32(7);
+                            empPayroll.Deduction = dr.GetInt32(8);
+                            empPayroll.TaxablePay = dr.GetInt32(9);
+                            empPayroll.IncomeTax = dr.GetInt32(10);
+                            empPayroll.NetPay = dr.GetInt32(11); ;
+                            Console.WriteLine(empPayroll.ID + "," + empPayroll.Name + "," + empPayroll.Gender + "," + empPayroll.PhoneNumber + "," + empPayroll.Address + ","
+                            + empPayroll.StartDate + "," + empPayroll.Department + "," + empPayroll.BasicPay + "," + empPayroll.Deduction + "," + empPayroll.TaxablePay + "," + empPayroll.IncomeTax + "," + empPayroll.NetPay);
+                        }
+                        return true;
+                    }
+                    connection.Close();
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                throw new EmployeeException(EmployeeException.ExceptionType.Date_Is_Not_Correct, "Date is Not crrect format");
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace EmployeePayroll
                 Console.WriteLine("3: Add Employee Data");
                 Console.WriteLine("4: Update the Employee Salary");
                 Console.WriteLine("5: Remove the Employee Data");
+                Console.WriteLine("6: Get Emplyee Data In Date Range");
                 Console.WriteLine("0: Exit");
                 option = int.Parse(Console.ReadLine());
                 switch (option)
@@ -82,6 +83,11 @@ namespace EmployeePayroll
                         int EmpId = int.Parse(Console.ReadLine());
                         delete.ID = EmpId;
                         employeeDetails.RemoveEmployeeData(delete);
+                        break;
+                    case 6:
+                        var fromDate = Convert.ToDateTime("2022-01-01");
+                        var ToDate = Convert.ToDateTime("2022-04-01");
+                        employeeDetails.GetEmplyeeDataInDateRange(fromDate, ToDate);
                         break;
                     case 0:
                         Console.WriteLine("Exit");
