@@ -21,17 +21,17 @@ namespace EmployeePayrollTesting
         public void Given_EmployeePayrollData_Add_InToDataBase()
         {
             bool expected = true;
-            employee.Name = "Karan";
-            employee.StartDate = Convert.ToDateTime("2022-06-10");
+            employee.Name = "Rohan";
+            employee.StartDate = Convert.ToDateTime("2022-06-15");
             employee.Gender = "M";
             employee.PhoneNumber = 7073330033;
             employee.Address = "Mumbai";
             employee.Department = "IT";
-            employee.BasicPay = 50000;
+            employee.BasicPay = 80000;
             employee.Deduction = 1000;
             employee.TaxablePay = 1000;
             employee.IncomeTax = 1000;
-            employee.NetPay = 47000;
+            employee.NetPay = 77000;
             bool result = employeeDetails.InsertEmployeeData(employee);
             Assert.AreEqual(expected, result);
         }
@@ -70,6 +70,16 @@ namespace EmployeePayrollTesting
             var ToDate = Convert.ToDateTime("2022-04-01");
             bool result = employeeDetails.GetEmplyeeDataInDateRange(fromDate, ToDate);
             Assert.AreEqual(expected, result);
+        }
+        /// <summary>
+        /// TC 5 - Retrieve All Employee Payroll Data from Database
+        /// </summary>
+        [Test]
+        public void Retrieve_AllEmployeePayrollData_FromDataBase()
+        {
+            int expected = 8;
+            var result = employeeDetails.GetAllEmployeePayrollData();
+            Assert.AreEqual(expected, result.Count);
         }
     }
 }

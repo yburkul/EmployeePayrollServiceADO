@@ -178,5 +178,41 @@ namespace EmployeePayroll
                 throw new EmployeeException(EmployeeException.ExceptionType.Date_Is_Not_Correct, "Date is Not crrect format");
             }
         }
+        public List<Employee> GetAllEmployeePayrollData()
+        {
+            List<Employee> employeeList = new List<Employee>();
+            Employee employee = new Employee();
+            SqlConnection sqlconnection = new SqlConnection(connectionString);
+            using (sqlconnection)
+            {
+                SqlCommand sqlCommand = new SqlCommand("GetAllEmployeeData", sqlconnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlconnection.Open();
+                SqlDataReader dr = sqlCommand.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        employee.ID = dr.GetInt32(0);
+                        employee.Name = dr.GetString(1);
+                        employee.Gender = dr.GetString(2);
+                        employee.PhoneNumber = dr.GetInt64(3);
+                        employee.Address = dr.GetString(4);
+                        employee.StartDate = dr.GetDateTime(5);
+                        employee.Department = dr.GetString(6);
+                        employee.BasicPay = dr.GetInt32(7);
+                        employee.Deduction = dr.GetInt32(8);
+                        employee.TaxablePay = dr.GetInt32(9);
+                        employee.IncomeTax = dr.GetInt32(10);
+                        employee.NetPay = dr.GetInt32(11);
+                        employeeList.Add(employee);
+                        Console.WriteLine(employee.ID + "," + employee.Name + "," + employee.Gender + "," + employee.PhoneNumber + "," + employee.Address + ","
+                            + employee.StartDate + "," + employee.Department + "," + employee.BasicPay + "," + employee.Deduction + "," + employee.TaxablePay + "," + employee.IncomeTax + "," + employee.NetPay);
+                    }
+                }
+                sqlconnection.Close();
+            }
+            return employeeList;
+        }
     }
 }
